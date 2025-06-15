@@ -4,7 +4,7 @@ A demonstration server implementing the Model Control Protocol (MCP) for AI mode
 
 ## Overview
 
-This project showcases a simple MCP server implementation that allows AI models to:
+This project showcases a modular MCP server implementation that allows AI models to:
 - Execute tools (calculate user statistics and update user status)
 - Access resources (user data and system information)
 - Use predefined prompts for common interactions
@@ -21,7 +21,9 @@ We are providing some basic static resources, tools, and prompts to illustrate h
 
 ```bash
 uv venv
-source .venv/bin/activate
+source .venv/bin/activate  # On Unix/MacOS
+# or
+.\.venv\Scripts\activate   # On Windows
 ```
 2. Install the required packages:
 
@@ -56,7 +58,6 @@ And add the following configuration:
     }
   }
 }
-
 ```
 
 ### Resources
@@ -79,7 +80,32 @@ Pre-defined interaction templates:
 
 ## Project Structure
 
-- `demo.py`: Main server implementation with MCP protocol handlers
-- `pyproject.toml`: Project configuration and dependencies
-- `.python-version`: Python version specification
+The project follows a modular organization:
 
+```
+mcp-server-demo/
+├── demo.py                    # Main entry point
+├── pyproject.toml             # Project configuration
+├── README.md                  # This documentation
+├── uv.lock                    # Dependencies lock file
+└── src/                       # Main package
+    ├── __init__.py            # Package initialization
+    ├── server.py              # Server creation and configuration
+    ├── resources/             # Resource-related modules
+    │   ├── __init__.py
+    │   └── handlers.py        # Resource handlers implementation
+    ├── tools/                 # Tool-related modules
+    │   ├── __init__.py
+    │   └── handlers.py        # Tool handlers implementation
+    └── prompts/               # Prompt-related modules
+        ├── __init__.py
+        └── handlers.py        # Prompt handlers implementation
+```
+
+## Protocol Details
+
+The Model Control Protocol (MCP) defines a standardized way for AI models to interact with applications. It provides:
+
+- **Resources**: Application-controlled sources of contextual data
+- **Tools**: Model-controlled functions that perform actions
+- **Prompts**: User-controlled templates for LLM interactions
